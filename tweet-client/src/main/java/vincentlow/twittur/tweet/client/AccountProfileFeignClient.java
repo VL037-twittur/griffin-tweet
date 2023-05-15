@@ -12,4 +12,7 @@ public interface AccountProfileFeignClient {
 
   @PostMapping("/api/v1/accounts/@{username}/add-tweet")
   ResponseEntity<ApiResponse> addTweetCount(@PathVariable String username);
+
+  @PostMapping("/api/v1/accounts/@{username}/subtract-tweet")
+  ResponseEntity<ApiResponse> subtractTweetCount(@PathVariable String username);
 }
