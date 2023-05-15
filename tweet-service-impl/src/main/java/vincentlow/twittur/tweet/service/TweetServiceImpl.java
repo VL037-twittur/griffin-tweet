@@ -1,9 +1,6 @@
 package vincentlow.twittur.tweet.service;
 
-import static vincentlow.twittur.tweet.util.ValidatorUtil.validateAccount;
-import static vincentlow.twittur.tweet.util.ValidatorUtil.validateArgument;
-import static vincentlow.twittur.tweet.util.ValidatorUtil.validateState;
-import static vincentlow.twittur.tweet.util.ValidatorUtil.validateTweet;
+import static vincentlow.twittur.tweet.util.ValidatorUtil.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -49,7 +46,8 @@ public class TweetServiceImpl implements TweetService {
 
     validateAccount(account, ExceptionMessage.ACCOUNT_NOT_FOUND);
 
-    return tweetRepository.findAllByCreatorIdAndMarkForDeleteFalse(account.getId(), PageRequest.of(pageNumber, pageSize));
+    return tweetRepository.findAllByCreatorIdAndMarkForDeleteFalse(account.getId(),
+        PageRequest.of(pageNumber, pageSize));
   }
 
   @Override
@@ -92,7 +90,6 @@ public class TweetServiceImpl implements TweetService {
     tweet.setUpdatedDate(now);
 
     accountProfileFeignClient.addTweetCount(creator.getUsername());
-
     return tweetRepository.save(tweet);
   }
 
@@ -136,6 +133,8 @@ public class TweetServiceImpl implements TweetService {
 
     tweet.setMarkForDelete(true);
     tweet.setUpdatedBy(creator.getId());
+
+    accountProfileFeignClient.subtractTweetCount(username);
     tweetRepository.save(tweet);
   }
 }
