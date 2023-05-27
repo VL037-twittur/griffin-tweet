@@ -3,6 +3,7 @@ package vincentlow.twittur.tweet.util;
 import java.util.Objects;
 
 import vincentlow.twittur.tweet.client.model.response.AccountCredentialResponse;
+import vincentlow.twittur.tweet.client.model.response.AccountProfileResponse;
 import vincentlow.twittur.tweet.model.constant.ExceptionMessage;
 import vincentlow.twittur.tweet.model.entity.Tweet;
 import vincentlow.twittur.tweet.web.model.response.exception.BadRequestException;
@@ -31,6 +32,14 @@ public class ValidatorUtil {
     } else if (pageSize < 1 || pageSize > 100) {
       throw new BadRequestException(ExceptionMessage.PAGE_SIZE_MUST_BE_BETWEEN_1_AND_100);
     }
+  }
+
+  public static AccountProfileResponse validateAccount(AccountProfileResponse account, String errorMessage) {
+
+    if (Objects.isNull(account)) {
+      throw new NotFoundException(errorMessage);
+    }
+    return account;
   }
 
   public static AccountCredentialResponse validateAccount(AccountCredentialResponse account, String errorMessage) {
