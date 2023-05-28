@@ -45,9 +45,9 @@ public class TweetServiceImpl implements TweetService {
   @Override
   public Page<Tweet> findAccountTweets(String username, int pageNumber, int pageSize) {
 
-    ResponseEntity<ApiSingleResponse<AccountCredentialResponse>> accountResponse =
-        accountCredentialFeignClient.getAccountCredential(username);
-    AccountCredentialResponse account = accountResponse.getBody()
+    ResponseEntity<ApiSingleResponse<AccountProfileResponse>> accountResponse =
+        accountProfileFeignClient.getAccountByUsername(username);
+    AccountProfileResponse account = accountResponse.getBody()
         .getData();
 
     validateAccount(account, ExceptionMessage.ACCOUNT_NOT_FOUND);
